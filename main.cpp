@@ -205,6 +205,8 @@ int main()
     while (fin.good())
     {
         int duplicateValue = 0;
+        int duplicateCourseValue = 0;
+        int duplicateSectionValue = 0;
         // read the line
         string line;
         getline(fin, line);
@@ -220,18 +222,6 @@ int main()
         if (course.find('-') == string::npos) continue; // invalid line: no dash in course name
         const string subjectCode(course.begin(), course.begin() + course.find('-'));
 
-        // if I get this far, then it's a valid record
-//        cout << term << '|' << section << '|'
-//            << course << '|' << instructor << '|'
-//            << whenWhere << '|' << subjectCode << endl;
-
-        //        cout << subjectCode << "\t" << course <<"\n";
-
-//first check for duplicate
-//then check for how many courses per subject code
-////
-//        cout << course << " = course \n" << subjectCode << " = subject code \n" <<section << " = sections" << endl;
-
         checkForDuplicates(NonDuplicateArray, SubjectArray, section, subjCount, subjectCode, dupeCount, stermCount, term, duplicateValue);
         count++;
 
@@ -245,24 +235,21 @@ int main()
     }
     fin.close();
 
-//    sort(SubjectArray, subjCount);
-//    outputSubjectsAndTermCounts(subjCount, dupeCount, stermCount, count, SubjectArray);
-    Queue<string> SectionsWithinCourses;
-    Queue<string> SubjectCodesCourses;
-    SubjectCodesCourses   = TheSubjectCodesNumberOfCourses.keys();
-    SectionsWithinCourses = TheCoursesNumberOfSections.keys();
-    while (!SubjectCodesCourses.empty()){
-        cout << SubjectCodesCourses.front() << "\t\t" <<  TheSubjectCodesNumberOfCourses[SubjectCodesCourses.front()] << endl;
-        SubjectCodesCourses.pop();
-    }
-    for (int i = 0; i < 5; i++){
-        cout << SectionsWithinCourses.front() << "\t\t" <<  TheCoursesNumberOfSections[SectionsWithinCourses.front()] << endl;
-        
-        SectionsWithinCourses.pop();
-    }
     
- 
-    cout << SubjectCodesCoursesSections.size() << " number of unique SubjectCodes\n";
+    Queue<string> CoursesSectionsss;
+    Queue<string> SubjectCodesAndCourses;
+    SubjectCodesAndCourses = SubjectCodesCoursesSections.keys();
     
+    while (!SubjectCodesAndCourses.empty()){
+        string subjectCode = SubjectCodesAndCourses.front();
+        cout << subjectCode << endl;
+        CoursesSectionsss = SubjectCodesCoursesSections[subjectCode].keys();
+        while (!CoursesSectionsss.empty()){
+            cout << CoursesSectionsss.front() << endl;
+            CoursesSectionsss.pop();
+        }
+        SubjectCodesAndCourses.pop();
+    }
+
     return 0;
 }
